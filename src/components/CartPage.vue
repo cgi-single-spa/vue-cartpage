@@ -1,8 +1,8 @@
 <template>
     <div class="cart-wrapper">
         <h1>Shopping cart</h1>
-        <div class="shopping-cart" v-if="products.length > 0">
-            <div class="shopping-cart_row" v-for="product in products" v-bind:key="product.id">
+        <div class="shopping-cart" v-if="localProducts.length > 0">
+            <div class="shopping-cart_row" v-for="product in localProducts" v-bind:key="product.id">
                 <div class="product">
                     <div class="product_image">
                         <img class="product_image_picture" :src="product.image" alt="Product image">
@@ -46,9 +46,17 @@ export default {
         // TODO: Turn prop into data
         products: Array
     },
+    data() {
+        return {
+            localProducts: []
+        }
+    },
     components: {
         StarRating,
         BadgeButton
+    },
+    mounted() {
+        this.localProducts = [...this.products]
     },
     methods: {
         // TODO: Share event dispatcher across Angular product page & CartPage?
@@ -58,7 +66,7 @@ export default {
             window.dispatchEvent(productEvent);
         },
         removeProduct(product) {
-            this.products.splice(this.products.findIndex(x => x.id == product.id), 1);
+            this.localProducts.splice(this.localProducts.findIndex(x => x.id == product.id), 1);
             this.publishProductEvent('removeProductFromCart', { product })
         }
     }
