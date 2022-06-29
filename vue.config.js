@@ -4,8 +4,8 @@ module.exports = defineConfig({
   configureWebpack: {
     output: {
       libraryTarget: 'system',
-      filename: '[name].js',
+      filename: 'js/[name].js',
     },
-    externals: ['@cgi/styleguide']
+    externals: ['@cgi/styleguide', 'vue', 'vue-single-spa']
   },
 })
